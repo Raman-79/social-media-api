@@ -1,44 +1,69 @@
-# Socail Media API
+# Social-Media-API
+# Overview
+The Social Media API is a RESTful service that allows users to perform basic operations related to users and their posts. This API provides endpoints for user management and post interactions.
 
-Welcome to the Express.js app! This guide will help you get started with installing and running the app on your local machine.
+# Table of Contents
+- Features
+- Getting Started
+- Prerequisites
+- Installation
+- API Endpoints
+- User Management
+- Post Interactions
 
-## Prerequisites
+# Features
+> User Management:
 
-Before you begin, make sure you have the following installed on your machine:
+- Create a new user
+- Retrieve user information
+- Update user details
+- Delete a user account
+> Post Interactions:
 
-- Node.js (version 18.0.0 or higher)
-- npm (Node Package Manager)
+- Create a new post
+- Retrieve posts for a user
+- Update a post
+- Delete a post
+# Getting Started
+# Prerequisites
+> Node.js
+> MongoDB (or any other preferred database)
+> npm or yarn
+> Installation
+- Clone the repository:
+git clone https://github.com/your-username/social-media-api.git
+- Install dependencies:
+cd social-media-api
+npm install
+- Configure environment variables:
+Create a .env file based on the provided .env.example and set your environment variables.
+- Start the server:
+npm start
+> API Endpoints
+- User Management
+1. Create a new user:
+POST /api/users/signup
+2. Retrieve user information:
+GET /api/users/profile/:username
+3. Update user details:
+POST /api/users/update/:id
+4. Login a user account:
+POST /api/users/login
+5. Logout a user account:
+POST /api/users/logout
+6. Follow/Unfollow a user account:
+POST /api/users/follow/:id
 
-## Installation
-
-1. Clone the repository to your local machine:
-
-    ```bash
-    git clone https://github.com/Raman-79/social-media-api
-    ```
-
-2. Navigate to the project directory:
-
-   
-    cd to the project directory
-    
-
-3. Install the dependencies:
-
-    ```bash
-    npm install
-    ```
-
-## Configuration
-
-1. Rename the `.env.example` file to `.env`.
-
-2. Open the `.env` file and update the configuration variables according to your environment.
-
-## Running the App
-
-To start the app, run the following command:
-
-    ```bash
-    npm run dev
-    ```
+- Post Interactions
+1. Create a new post:
+POST /api/posts/create
+2. Retrieve posts for a user:
+GET /api/posts/:postId
+3. Like/Unlike a post:
+POST /api/posts/like/:postId
+4. Delete a post:
+DELETE /api/posts/:postId
+5. Reply to a post:
+POST /api/posts/reply/:postId
+6. Get Feed
+GET /api/posts/feed
