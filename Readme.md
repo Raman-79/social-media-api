@@ -1,4 +1,4 @@
-# Express.js App
+# Socail Media API
 
 Welcome to the Express.js app! This guide will help you get started with installing and running the app on your local machine.
 
@@ -19,9 +19,9 @@ Before you begin, make sure you have the following installed on your machine:
 
 2. Navigate to the project directory:
 
-    ```bash
+   
     cd to the project directory
-    ```
+    
 
 3. Install the dependencies:
 
