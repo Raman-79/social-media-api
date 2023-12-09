@@ -31,7 +31,7 @@ The Social Media API is a RESTful service that allows users to perform basic ope
 > npm or yarn
 > Installation
 - Clone the repository:
-git clone https://github.com/your-username/social-media-api.git
+git clone [https://github.com/Raman-79/social-media-api.git](https://github.com/Raman-79/social-media-api)
 - Install dependencies:
 cd social-media-api
 npm install
