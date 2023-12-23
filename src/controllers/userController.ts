@@ -1,8 +1,23 @@
 import User from '../models/userModel.js';
 import bycrpt from 'bcryptjs';
 import generateToken from '../utils/authentication/generateToken.js';
-
-const singupUser = async (req,res) => {
+import {Request,Response} from 'express';
+import { Types } from 'mongoose';
+interface User {
+    _id: Types.ObjectId;
+    username:string,
+    email:string,
+    profilePic:string,
+    followers:[string],
+    following:[string],
+    bio:string,
+    isFrozen:boolean
+  }
+  
+  interface UserRequest extends Request {
+    user: User;
+  }
+const singupUser = async (req:UserRequest,res:Response) => {
     try {
         const {email,password,username,name} = req.body;
         const user = await User.findOne({$or:[{email},{username}]});
@@ -30,7 +45,7 @@ const singupUser = async (req,res) => {
         console.log("Error in creating user", err.message);
     }
 }
-const loginUser = async (req,res) => {
+const loginUser = async (req:UserRequest,res:Response) => {
     try {
         const {username,password} = req.body;
         const user = await User.findOne({username});
@@ -54,7 +69,7 @@ const loginUser = async (req,res) => {
         console.log("Error in login user", error.message);
     }
 }
-const logoutUser =  (req,res) => {
+const logoutUser =  (req:UserRequest,res:Response) => {
     try {
         res.cookie("jwt","",{
             expires: new Date(0),
@@ -68,7 +83,7 @@ const logoutUser =  (req,res) => {
         console.log("Error in logout user", error.message);
     }
 }
-const handleFollowUser = async (req,res) => {
+const handleFollowUser = async (req:UserRequest,res:Response) => {
     try {
     const {id} = req.params;
     const currentUserId = req.user._id.toString();
@@ -94,7 +109,7 @@ const handleFollowUser = async (req,res) => {
         console.log("Error in follow user", error.message);
     }
 }
-const handleUnfollowUser = async (req,res) => {
+const handleUnfollowUser = async (req:UserRequest,res:Response) => {
     try{
         const {id} = req.params;
         const currentUserId = req.user._id.toString();
@@ -118,7 +133,7 @@ const handleUnfollowUser = async (req,res) => {
     }
     
 }
-const updateUser = async(req,res) => {
+const updateUser = async(req:UserRequest,res:Response) => {
     const {name,email,username,password,profilePic,bio} = req.body;
     const userId = req.user._id.toString();
     try{
@@ -146,7 +161,7 @@ const updateUser = async(req,res) => {
         console.log("Error in update user", error.message);
     }
 }
-const getUserProfile  = async(req,res) => {
+const getUserProfile  = async(req:Request,res:Response) => {
     try {
         const { username } = req.params;
         const user = await User.findOne({username}).select("-password").select("-updatedAt");

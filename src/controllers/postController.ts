@@ -1,7 +1,22 @@
+import { Types } from 'mongoose';
 import Post from '../models/postModel.js';
 import User from '../models/userModel.js';
-
-const createPost = async(req,res) => {
+import { Request,Response } from 'express';
+interface User {
+    _id: Types.ObjectId;
+    username:string,
+    email:string,
+    profilePic:string,
+    followers:[string],
+    following:[string],
+    bio:string,
+    isFrozen:boolean
+  }
+  
+  interface UserRequest extends Request {
+    user: User;
+  }
+const createPost = async(req:UserRequest,res:Response) => {
     try {
         const {postedBy,text,img} = req.body;
         const user = await User.findById(postedBy);
@@ -27,7 +42,7 @@ const createPost = async(req,res) => {
         return  res.status(500).json({msg:error.message});
     }
 }
-const getPost = async(req,res) =>{
+const getPost = async(req:UserRequest,res:Response) =>{
     try {
         const {postId}  = req.params;
         const post  = await Post.findById(postId);
@@ -40,7 +55,7 @@ const getPost = async(req,res) =>{
         res.status(500).json({msg:error.message});
     }
 }
-const deletePost = async(req,res) => {
+const deletePost = async(req:UserRequest,res:Response) => {
     try {
         const {postId} = req.params;
         const post = await Post.findById(postId);
@@ -58,13 +73,14 @@ const deletePost = async(req,res) => {
     }
 
 }
-const likeUnlikePost = async (req, res) => {
+const likeUnlikePost = async (req:UserRequest, res:Response) => {
 	try {
 		const {  postId } = req.params;
 		const userId = req.user._id;
 
-		const post = await Post.findById(postId);
-
+		
+        
+        const post = await Post.findById(postId);
 		if (!post) {
 			return res.status(404).json({ error: "Post not found" });
 		}
@@ -85,7 +101,7 @@ const likeUnlikePost = async (req, res) => {
 		res.status(500).json({ error: err.message });
 	}
 };
-const replyToPost = async(req,res) => {
+const replyToPost = async(req:UserRequest,res:Response) => {
 try {
     const {text} = req.body;
     const {postId} = req.params;
@@ -108,7 +124,7 @@ try {
     return res.status(500).json({msg:error.message});
 }
 }
-const getFeedPosts = async (req, res) => {
+const getFeedPosts = async (req:UserRequest, res:Response) => {
 	try {
 		const userId = req.user._id;
 		const user = await User.findById(userId);
